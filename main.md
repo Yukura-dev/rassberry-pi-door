@@ -62,3 +62,8 @@ while True:
 
 
 [Rasberry Pi picoの公式ページ](https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html#pinout-and-design-files)
+
+
+
+## 参考文献
+[Raspberry Pi PicoのGPIO機能まとめ/MicroPythonでのプログラム方法](https://hellobreak.net/raspberrypi-pico-gpio-micropython-0206/)
