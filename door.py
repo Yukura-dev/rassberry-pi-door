@@ -1,8 +1,6 @@
 import time
 import RPi.GPIO as GPIO
 
-
-
 GPIO.setmode(GPIO.BCM)
 
 GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_UP) #reed switch
@@ -11,18 +9,12 @@ GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_UP) #reed switch
 GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_UP) #A
 GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_UP) #B
 GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_UP) #C
-GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_UP) 
-GPIO.setup(6, GPIO.IN, pull_up_down=GPIO.PUD_UP) 
-GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_UP) 
-GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_UP) 
-GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_UP) 
-GPIO.setup(25, GPIO.IN, pull_up_down=GPIO.PUD_UP) 
 
-#LED
-#GPIO.setup(16, GPIO.OUT) 
+GPIO.setup(5, GPIO.OUT) #buzzer
 
 while True:
     while True:
+        GPIO.output(5,0)
         if GPIO.wait_for_edge(17,GPIO.FALLING) != 0:
             GPIO.wait_for_edge(18,GPIO.RISING)
             print("OPEN!")
@@ -31,7 +23,9 @@ while True:
                 break        
             else:
                 print("OUT")
-                import buzzer
+                GPIO.output(5, 1)
+                time.sleep(5)
+
                 break
 
         elif GPIO.wait_for_edge(27,GPIO.FALLING) != 0:
