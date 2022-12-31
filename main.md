@@ -71,12 +71,57 @@ while True:
 ![image](image/ras-pico-pin.png)
 [Rasberry Pi picoの公式ページ](https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html#pinout-and-design-files)
 
-GP10 door  
-GP11 A  
-GP12 B  
-GP13 C  
-GP14 buzzer  
+Printを使うと動作が変だったので、動作確認にはPrintではなくLEDを使用しました。
+ラズパイでした動作とまったく同じことができなかったので少し妥協してます。
 
+door-pico.py
+~~~Python
+import utime #pico用time
+from machine import Pin
+
+###青20　黄色19　赤18
+
+Door = Pin(10, Pin.IN, Pin.PULL_UP) #reed switch
+
+# tact switch
+TactSwA = Pin(11, Pin.IN, Pin.PULL_UP) #A
+TactSwB = Pin(12, Pin.IN, Pin.PULL_UP) #B
+TactSwC = Pin(13, Pin.IN, Pin.PULL_UP) #C
+
+Buzzer = Pin(14, Pin.OUT) #buzzer
+
+#LED
+Led = Pin(18, Pin.OUT)
+Yel = Pin(19, Pin.OUT)
+Blu = Pin(20, Pin.OUT)
+
+while True:
+    while True:
+        if TactSwA.value() == 0 :
+            Led.value(1)
+            while True :
+                if Door.value() == 0:  
+                    Yel.value(1)
+                    utime.sleep(10)
+                    if  TactSwC.value() == 0: #私
+                        Blu.value(1)
+                        utime.sleep(5)
+                        break        
+                    else: #侵入者
+                        Buzzer.value(1)
+                        utime.sleep(2)
+                        break
+        elif TactSwB.value() == 0:
+            Yel.value(1)
+            utime.sleep(30)
+            break
+        else:
+            Led.value(0)
+            Yel.value(0)
+            Blu.value(0)
+            Buzzer.value(0)
+            break
+~~~
 
 
 
