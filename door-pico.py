@@ -17,26 +17,27 @@ Blu = Pin(20, Pin.OUT)
 
 while True:
     while True:
-        Buzzer.value(0)
         if TactSwA.value() == 0 :
             Led.value(1)
             while True :
                 if Door.value() == 0:  
-                    Yel.value(1) 
-                    while True:        
-                        if  TactSwC.value() == 1:
-                            break        
-                        else:
-                            Buzzer.value(1)
-                            break
-                break
-
-
+                    Yel.value(1)
+                    utime.sleep(10)
+                    if  TactSwC.value() == 0:
+                        Blu.value(1)
+                        utime.sleep(5)
+                        break        
+                    else:
+                        Buzzer.value(1)
+                        utime.sleep(2)
+                        break
         elif TactSwB.value() == 0:
             Yel.value(1)
+            utime.sleep(30)
             break
         else:
             Led.value(0)
             Yel.value(0)
             Blu.value(0)
+            Buzzer.value(0)
             break
